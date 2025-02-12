@@ -1,0 +1,48 @@
+<div class="card border-0 bg-body-tertiary shadow-sm">
+  <div class="card-body">
+    <div class="row align-items-center">
+
+      <!-- Movie Image (Responsive) -->
+      <div class="col-md-4 col-12 text-center mb-3 mb-md-0">
+        <img src="<%= movie.imageUrl %>" class="img-fluid rounded w-100" alt="<%= movie.title + ' ' + 'poster' %>" title="<%= movie.title + ' ' + 'poster' %>">
+      </div>
+
+      <!-- Movie Details -->
+      <div class="col-md-8 col-12">
+        <h5 class="card-title"><%= movie.title %></h5>
+        <p class="card-text text-muted"><%= movie.genre %> • <%= movie.releaseYear %></p>
+
+        <!-- IMDb-Style Rating -->
+        <p class="mb-2">
+          <span class="text-warning px-2 py-1 rounded">
+            <i class="bi bi-star-fill"></i> <%= movie.rating %>
+          </span>
+        </p>
+
+        <!-- Director -->
+        <h5 class="fs-6 <%= !isHide ? 'd-none' : ''%>">Director</h5>
+        <p class="card-text text-muted <%= !isHide ? 'd-none' : ''%>"><%= movie.director %></p>
+
+        <!-- Cast -->
+        <h5 class="fs-6 <%= !isHide ? 'd-none' : ''%>">Cast</h5>
+        <p class="card-text text-muted <%= !isHide ? 'd-none' : ''%>"><%= movie.cast %></p>
+
+        <!-- Country -->
+        <h5 class="fs-6 <%= !isHide ? 'd-none' : ''%>">Origin Country</h5>
+        <p class="card-text text-muted <%= !isHide ? 'd-none' : ''%>"><%= movie.country %></p>
+
+        <!-- Language -->
+        <h5 class="fs-6 <%= !isHide ? 'd-none' : ''%>">Language</h5>
+        <p class="card-text text-muted <%= !isHide ? 'd-none' : ''%>"><%= movie.language %></p>
+
+        <!-- Description -->
+        <h5 class="fs-6 <%= !isHide ? 'd-none' : ''%>">Description</h5>
+        <p class="card-text text-muted">
+          <%= isHide ? movie.description : movie.description.substring(0, 100) + '...' %>
+        </p>
+
+        <button class="btn btn-primary <%= isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/view'">View</button>
+      </div>
+    </div>
+  </div>
+</div>

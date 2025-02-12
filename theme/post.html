@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Bootstrap Icons CDN for Star Icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+</head>
+
+<body>
+
+  <!-- As a heading -->
+  <nav class="navbar bg-body-tertiary border-0 shadow-sm">
+    <div class="container">
+      <span class="navbar-brand mb-0 h1 fw-bold">Movify <span class="badge text-bg-secondary">Server</span></span>
+      <button id="darkmode-toggle" class="btn btn-success btn-md"></button>
+    </div>
+  </nav>
+
+  <div class="container mt-3">
+    <div class="card border-0 bg-body-tertiary shadow-sm">
+      <h4 class="fs-6 mt-4 mx-3 fw-bold">Post Movie</h4>
+      <div class="card-body">
+        <form class="row g-3">
+          <!-- Title & Genre -->
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input type="text" class="form-control border-0" id="title" placeholder="Title" required>
+              <label for="title">Title</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-floating">
+              <input type="text" class="form-control border-0" id="genre" placeholder="Genre" required>
+              <label for="genre">Genre</label>
+            </div>
+          </div>
+
+          <!-- Director & Year Released -->
+          <div class="col-lg-6">
+            <div class="form-floating">
+              <input type="text" class="form-control border-0" id="director" placeholder="Director" required>
+              <label for="director">Director</label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-floating">
+              <input type="number" class="form-control border-0" id="year" placeholder="Year Released" min="1888" max="2025" required>
+              <label for="year">Year Released</label>
+            </div>
+          </div>
+
+          <!-- Duration & Rating -->
+          <div class="col-lg-3">
+            <div class="form-floating">
+              <input type="number" class="form-control border-0" id="duration" placeholder="Duration (mins)" min="1" required>
+              <label for="duration">Duration (mins)</label>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-floating">
+              <input type="number" class="form-control border-0" id="rating" placeholder="Rating (0-10)" min="0" max="10" step="0.1" required>
+              <label for="rating">Rating (0-10)</label>
+            </div>
+          </div>
+
+          <!-- Cast -->
+          <div class="col-lg-9">
+            <div class="form-floating">
+              <input type="text" class="form-control border-0" id="cast" placeholder="Cast (comma-separated)">
+              <label for="cast">Cast (comma-separated)</label>
+            </div>
+          </div>
+
+          <!-- Language & Country -->
+          <div class="col-lg-4">
+            <div class="form-floating">
+              <input type="text" class="form-control border-0" id="language" placeholder="Language">
+              <label for="language">Language</label>
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="form-floating">
+              <input type="text" class="form-control border-0" id="country" placeholder="Country">
+              <label for="country">Country</label>
+            </div>
+          </div>
+
+          <!-- Poster URL -->
+          <div class="col-lg-12">
+            <div class="form-floating">
+              <input type="url" class="form-control border-0" id="poster" placeholder="Poster URL">
+              <label for="poster">Poster URL</label>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="col-lg-12">
+            <div class="form-floating">
+              <textarea class="form-control border-0" id="description" placeholder="Description" style="height: 100px" required></textarea>
+              <label for="description">Description</label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="col-lg-12 text-end">
+            <button type="button" class="btn btn-secondary">Cancel</button>
+            <button type="submit" class="btn btn-primary">Post Movie</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+
+    <script src="app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+
+</html>

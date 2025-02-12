@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+
+<%- include('partials/head', { head }) %>
+
+<body>
+  <%- include('partials/navbar') %>
+  <%- include('partials/label', { title: 'Listing' }) %>
+
+  <div class="container mt-3">
+    <%- include('partials/movieCard', { movie, isHide: true }) %>
+  </div>
+
+  <%- include('partials/script') %>
+</body>
+
+</html>
