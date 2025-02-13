@@ -1,7 +1,24 @@
 const mongoose = require('mongoose');
 
 /**
- * Movie schema instance.
+ * Movie Schema
+ * 
+ * This schema defines the structure for movie documents in the database.
+ * 
+ * @typedef {Object} Movie
+ * @property {string} title - The title of the movie. Required.
+ * @property {string} genre - The genre of the movie. Required.
+ * @property {string} director - The director of the movie. Required.
+ * @property {number} releaseYear - The release year of the movie. Required.
+ * @property {number} duration - The duration of the movie in minutes. Required.
+ * @property {number} rating - The rating of the movie, ranging from 0 to 10.
+ * @property {string[]} cast - The cast of the movie.
+ * @property {string} description - A brief description of the movie.
+ * @property {string} language - The language of the movie. Defaults to 'English'.
+ * @property {string} country - The country where the movie was produced. Defaults to 'USA'.
+ * @property {string} imageUrl - The URL of the movie's image. Required.
+ * @property {Date} createdAt - The date when the movie document was created. Automatically generated.
+ * @property {Date} updatedAt - The date when the movie document was last updated. Automatically generated.
  */
 const movieSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -18,8 +35,13 @@ const movieSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 /**
- * Create a model based on your shema.
+ * Represents a Movie model.
+ * @typedef {Object} Movie
+ * @property {string} title - The title of the movie.
+ * @property {string} director - The director of the movie.
+ * @property {number} releaseYear - The release year of the movie.
+ * @property {string[]} genres - The genres of the movie.
  */
 const Movie = mongoose.model('Movie', movieSchema);
 
-module.exports = Movie; // Export movie.
+module.exports = Movie;

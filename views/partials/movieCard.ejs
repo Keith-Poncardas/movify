@@ -45,12 +45,16 @@
           <%= isHide ? movie.description : movie.description.substring(0, 100) + '...' %>
         </p>
 
+        <!-- Hidden Buttons -->
         <button class="btn btn-primary btn-sm <%= isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/view'">View</button>
         <button class="btn btn-secondary btn-sm <%= !isHide ? 'd-none' : '' %>" onclick="window.location = '/'">Back</button>
         <button class="btn btn-success btn-sm <%= !isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/edit'">Edit</button>
+
+        <!-- Delete Button -->
         <form action="/movie/<%= movie._id %>?_method=DELETE" method="post" class="d-inline">
           <button class="btn btn-danger btn-sm <%= !isHide ? 'd-none' : '' %>">Delete</button>
         </form>
+
       </div>
     </div>
   </div>
