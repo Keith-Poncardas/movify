@@ -44,7 +44,7 @@ Make sure you have the following installed on your system:
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/your-username/imdb-clone.git
+git clone https://github.com/Keith-Poncardas/movify.git
 cd imdb-clone
 ```
 
@@ -89,16 +89,3 @@ The server will run on `http://localhost:<PORT>`.
 - ✅ Implement authentication for user reviews and ratings.
 - ✅ Add movie categories and advanced filtering.
 - ✅ Improve UI/UX for a better user experience.
-
-## License
-
-This project is **open-source** and available under the [MIT License](LICENSE).
-
-## Contributing
-
-Contributions are welcome! Feel free to submit issues or pull requests.
-
-## Contact
-
-📧 **Your Name** - [GitHub](https://github.com/your-username) - [Your Email]
-
