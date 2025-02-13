@@ -52,9 +52,10 @@ const getMovies = async (req, res) => {
  * @throws Will log an error message if the update operation fails.
  */
 const updateMovie = async (req, res) => {
+  const { id } = req.params;
   try {
-    await movieService.updateMovie(req.params.id, req.body);
-    res.redirect('/');
+    await movieService.updateMovie(id, req.body);
+    res.redirect(`/movie/${id}/view`);
   } catch (err) {
     console.log(`Error updating movie: ${err.message}`);
   };
