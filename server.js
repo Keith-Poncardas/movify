@@ -6,6 +6,7 @@ const path = require('path');
 const connectDB = require('./config/db');
 const controller = require('./controllers/movieControllers');
 const headHelper = require('./utils/headHelper');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
