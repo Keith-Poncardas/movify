@@ -1,4 +1,5 @@
 const createOrEditFormData = (movie = {}) => ({
+  _id: movie._id,
   formAction: movie._id ? `/movie/${movie._id}?_method=PUT` : '/movie',
   formTitle: movie._id ? 'Edit Movie' : 'Post Movie',
   title: movie.title || '',

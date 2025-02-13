@@ -11,7 +11,7 @@ const createMovie = async (data) => {
  * Async function to get all movies from database.
  */
 const getMovies = async () => {
-  return await Movie.find();
+  return await Movie.find().sort({ updatedAt: -1 });
 };
 
 /**

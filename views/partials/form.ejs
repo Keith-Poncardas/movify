@@ -85,7 +85,7 @@
 
         <!-- Submit Button -->
         <div class="col-lg-12 text-end">
-          <button type="button" class="btn btn-secondary" onclick="window.location = '/'">Cancel</button>
+          <button type="button" class="btn btn-secondary" onclick="window.location = '<%= formData && formData._id ? `/movie/${formData._id}/view` : '/' %>'">Cancel</button>
           <button type="submit" class="btn btn-primary"><%= formData.buttonText || '' %></button>
         </div>
       </form>

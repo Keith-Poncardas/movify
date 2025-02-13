@@ -5,6 +5,7 @@ const methodOverride = require('method-override');
 const path = require('path');
 const connectDB = require('./config/db');
 const controller = require('./controllers/movieControllers');
+const headHelper = require('./utils/headHelper');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,7 +21,8 @@ app.use('/movie', require('./routes/movieRoutes'));
 
 // 404 Middleware.
 app.use((req, res) => {
-  res.render('404');
+  const head = headHelper.optimizeSEO({}, require('./constant/defaultSeo').errorDefault);
+  res.render('404', { head });
 });
 
 connectDB();

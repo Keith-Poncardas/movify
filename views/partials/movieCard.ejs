@@ -35,13 +35,22 @@
         <h5 class="fs-6 <%= !isHide ? 'd-none' : ''%>">Language</h5>
         <p class="card-text text-muted <%= !isHide ? 'd-none' : ''%>"><%= movie.language %></p>
 
+        <!-- Duration -->
+        <h5 class="fs-6 <%= !isHide ? 'd-none' : ''%>">Duration</h5>
+        <p class="card-text text-muted <%= !isHide ? 'd-none' : ''%>"><%= movie.duration %> mins</p>
+
         <!-- Description -->
         <h5 class="fs-6 <%= !isHide ? 'd-none' : ''%>">Description</h5>
         <p class="card-text text-muted">
           <%= isHide ? movie.description : movie.description.substring(0, 100) + '...' %>
         </p>
 
-        <button class="btn btn-primary <%= isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/view'">View</button>
+        <button class="btn btn-primary btn-sm <%= isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/view'">View</button>
+        <button class="btn btn-secondary btn-sm <%= !isHide ? 'd-none' : '' %>" onclick="window.location = '/'">Back</button>
+        <button class="btn btn-success btn-sm <%= !isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/edit'">Edit</button>
+        <form action="/movie/<%= movie._id %>?_method=DELETE" method="post" class="d-inline">
+          <button class="btn btn-danger btn-sm <%= !isHide ? 'd-none' : '' %>">Delete</button>
+        </form>
       </div>
     </div>
   </div>
