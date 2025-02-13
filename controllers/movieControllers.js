@@ -86,4 +86,9 @@ const postMovieRoute = (req, res) => {
   res.render('post', { formData, head });
 };
 
-module.exports = { createMovie, getMovies, updateMovie, deleteMovie, updateMovieRoute, postMovieRoute, getMovie }; // Export all the functions.
+const getJSON = async (req, res) => {
+  const movies = await movieService.getMovies();
+  res.json(movies);
+};
+
+module.exports = { createMovie, getMovies, updateMovie, deleteMovie, updateMovieRoute, postMovieRoute, getMovie, getJSON }; // Export all the functions.
