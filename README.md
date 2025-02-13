@@ -82,6 +82,7 @@ The server will run on `http://localhost:<PORT>`.
 | POST   | `/movie`          | Add a new movie          |
 | PUT    | `/movie/:id/edit` | Update an existing movie |
 | DELETE | `/movie/:id`      | Delete a movie           |
+| GET    | `/movie/api/all`  | Get all movies (JSON)    |
 
 
 ## Future Improvements
