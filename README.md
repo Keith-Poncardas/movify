@@ -44,7 +44,7 @@ Make sure you have the following installed on your system:
 ### Clone the Repository
 
 ```sh
-git clone https://github.com/your-username/imdb-clone.git
+git clone https://github.com/Keith-Poncardas/movify.git
 cd imdb-clone
 ```
 
