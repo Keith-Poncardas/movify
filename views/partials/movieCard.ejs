@@ -45,14 +45,15 @@
           <%= isHide ? movie.description : movie.description.substring(0, 100) + '...' %>
         </p>
 
-        <!-- Hidden Buttons -->
-        <button class="btn btn-primary btn-sm <%= isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/view'">Details</button>
-        <button class="btn btn-secondary btn-sm <%= !isHide ? 'd-none' : '' %>" onclick="window.location = '/'">Back</button>
-        <button class="btn btn-success btn-sm <%= !isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/edit'">Edit</button>
+        <button class="btn btn-outline-primary rounded-3 btn-sm <%= isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/view'">Details</button>
+
+        <!-- Hidden Buttons on view mode -->
+        <button class="btn btn-outline-secondary rounded-3 btn-sm <%= !isHide ? 'd-none' : '' %>" onclick="window.location = '/'">Back</button>
+        <button class="btn btn-outline-success rounded-3 btn-sm <%= !isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/edit'">Edit</button>
 
         <!-- Delete Button -->
         <form action="/movie/<%= movie._id %>?_method=DELETE" method="post" class="d-inline">
-          <button class="btn btn-danger btn-sm mx-1 <%= !isHide ? 'd-none' : '' %>">Delete</button>
+          <button class="btn btn-outline-danger rounded-3 btn-sm mx-1 <%= !isHide ? 'd-none' : '' %>">Delete</button>
         </form>
 
       </div>

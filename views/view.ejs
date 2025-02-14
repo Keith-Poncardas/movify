@@ -5,11 +5,12 @@
 
 <body>
   <%- include('partials/navbar') %>
-  <%- include('partials/label', { title: 'Listing' }) %>
+  <%- include('partials/containerHeading', { genres: [], name: 'Listing', btnFilterTitle: '', btnSortTitle: '', isBtnHide: true }) %>
 
-  <div class="container mt-3">
+  <div class="container">
     <%- include('partials/movieCard', { movie, isHide: true }) %>
   </div>
+
   <%- include('partials/credits') %>
   <%- include('partials/script') %>
 </body>

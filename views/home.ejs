@@ -6,7 +6,7 @@
 <body>
   <%- include('partials/navbar') %>
   <%- include('partials/movieInput') %>
-  <%- include('partials/containerHeading', { genres }) %>
+  <%- include('partials/containerHeading', { genres, name: '', btnFilterTitle: 'Filter', btnSortTitle: 'Sort', isBtnHide: false }) %>
   <%- include('partials/movieContainer') %>
   <%- include('partials/credits') %>
   <%- include('partials/script') %>

@@ -1,6 +1,7 @@
-<div class="container my-2">
-  <div class="d-flex justify-content-between align-items-center">
-    <%- include('label', { title: 'Listings' }) %>
-    <%- include('dropdown'), { genres } %>
+<div class="container my-3">
+  <div class="d-flex justify-content-between align-items-center gap-1">
+    <%- include('label', { title: name || 'Listings' }) %>
+    <%- include('dropdownBtnSort'), { btnSortTitle, isBtnHide: false } %>
+    <%- include('dropdownBtnFilter'), { genres, btnFilterTitle, isBtnHide } %>
   </div>
 </div>
