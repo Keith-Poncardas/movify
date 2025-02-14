@@ -124,7 +124,7 @@ const getMovie = async (req, res) => {
         btnFilterTitle: '',
         btnSortTitle: '',
         sort: [],
-        isBtnHide: true
+        isBtnHide: true,
       },
       movieCardData: {
         movie,

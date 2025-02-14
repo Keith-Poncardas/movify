@@ -1,9 +1,9 @@
-<% const dropdownBtnSortData = {
+<% let dropdownBtnSortData = {
   btnSortTitle, 
   isBtnHide: false
 } %>
 
-<% const dropdownBtnFilterData = {
+<% let dropdownBtnFilter = {
   genres, 
   btnFilterTitle, 
   isBtnHide
@@ -13,6 +13,6 @@
   <div class="d-flex justify-content-between align-items-center gap-1">
     <%- include('label', { title: name || 'Listings' }) %>
     <%- include('dropdownBtnSort'), { ...dropdownBtnSortData } %>
-    <%- include('dropdownBtnFilter'), { ...dropdownBtnFilterData } %>
+    <%- include('dropdownBtnFilter'), { ...dropdownBtnFilter } %>
   </div>
 </div>
