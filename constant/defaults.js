@@ -97,4 +97,9 @@ const genres = [
   'Musical', 'Mystery', 'Romance', 'Sci-Fi', 'Sport', 'Thriller', 'War', 'Western'
 ];
 
-module.exports = { homeDefault, postDefault, editDefault, errorDefault, genres };
+const sortBy = [
+  'Most Popular',
+  'Latest'
+];
+
+module.exports = { homeDefault, postDefault, editDefault, errorDefault, genres, sortBy };

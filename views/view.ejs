@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
 
-<%- include('partials/head', { head }) %>
+<%- include('partials/head', { ...headData }) %>
 
 <body>
   <%- include('partials/navbar') %>
-  <%- include('partials/containerHeading', { genres: [], name: 'Listing', btnFilterTitle: '', btnSortTitle: '', isBtnHide: true }) %>
+  <%- include('partials/containerHeading', { ...containerHeadingData}) %>
 
   <div class="container">
-    <%- include('partials/movieCard', { movie, isHide: true }) %>
+    <%- include('partials/movieCard', { ...movieCardData }) %>
   </div>
 
   <%- include('partials/credits') %>

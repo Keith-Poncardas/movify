@@ -56,9 +56,14 @@ app.use('/movie', require('./routes/movieRoutes')); // Movie-related routes
 
 // 404 Error Handling Middleware
 app.use((req, res) => {
-  // Generate SEO metadata for the error page
-  const head = headHelper.optimizeSEO({}, require('./constant/defaults').errorDefault);
-  res.render('404', { head }); // Render the "404.ejs" view with SEO metadata
+
+  const errorStructure = {
+    headData: {
+      head: headHelper.optimizeSEO({}, require('./constant/defaults').errorDefault)
+    }
+  };
+
+  res.render('404', { ...errorStructure }); // Render the "404.ejs" view with SEO metadata
 });
 
 // Connect to the database

@@ -1,10 +1,11 @@
 <div class="dropdown <%= isBtnHide ? 'd-none' : '' %>">
-  <a class="btn bg-body-tertiary btn-sm rounded-3 border-0 shadow-sm dropdown-toggle disabled" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  <a class="btn bg-body-tertiary btn-sm rounded-3 border-0 shadow-sm dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <%= btnSortTitle || 'Sort' %>
   </a>
 
   <ul class="dropdown-menu border border-secondary-subtle bg-body-tertiary shadow-sm">
-    <li><a class="dropdown-item" href="/movie">Most Popular</a></li>
-    <li><a class="dropdown-item" href="/movie">By Year</a></li>
+    <% sort.forEach(item => { %>
+    <li><a class="dropdown-item" href="/movie"><%= item %></a></li>
+    <% }) %>
   </ul>
 </div>

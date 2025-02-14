@@ -21,20 +21,36 @@ const createMovie = async (req, res) => {
 };
 
 /**
- * Asynchronously retrieves a list of movies and renders the home page with the movies and SEO-optimized head.
- *
- * @param {Object} req - The request object.
- * @param {Object} res - The response object.
- * @returns {Promise<void>} - A promise that resolves when the movies are retrieved and the home page is rendered.
- * @throws {Error} - If there is an error retrieving the movies.
+ * Controller function to get movies based on genre and render the home page.
+ * 
+ * @param {Object} req - Express request object.
+ * @param {Object} req.query - Query parameters from the request.
+ * @param {string} req.query.genre - Genre to filter movies.
+ * @param {Object} res - Express response object.
+ * 
+ * @returns {Promise<void>} - Renders the home page with movies data.
  */
 const getMovies = async (req, res) => {
   const { genre } = req.query;
   try {
-    const movies = await movieService.getMovies(genre);
-    const head = headHelper.optimizeSEO({}, defaults.homeDefault);
-    const genres = defaults.genres;
-    res.render('home', { movies, head, genres });
+    const moviesData = await movieService.getMovies(genre);
+
+    const getMoviesStructure = {
+      headData: {
+        head: headHelper.optimizeSEO({}, defaults.homeDefault)
+      },
+      containerHeadingData: {
+        genres: defaults.genres,
+        name: '',
+        btnFilterTitle: 'Filter',
+        btnSortTitle: 'Sort',
+        sort: defaults.sortBy,
+        isBtnHide: false
+      },
+      movies: moviesData
+    };
+
+    res.render('home', { ...getMoviesStructure });
   } catch (err) {
     console.log(`Error getting movie: ${err.message}`);
   };
@@ -97,8 +113,26 @@ const deleteMovie = async (req, res) => {
 const getMovie = async (req, res) => {
   try {
     const movie = await movieService.getMovieID(req.params.id);
-    const head = headHelper.optimizeSEO(movie);
-    res.render('view', { movie, head });
+
+    const getMovieStructure = {
+      headData: {
+        head: headHelper.optimizeSEO(movie)
+      },
+      containerHeadingData: {
+        genres: [],
+        name: 'Listing',
+        btnFilterTitle: '',
+        btnSortTitle: '',
+        sort: [],
+        isBtnHide: true
+      },
+      movieCardData: {
+        movie,
+        isHide: true
+      }
+    };
+
+    res.render('view', { ...getMovieStructure });
   } catch (err) {
     console.log(`Error getting movie: ${err.message}`);
   };
@@ -122,10 +156,18 @@ const getMovie = async (req, res) => {
 const updateMovieRoute = async (req, res) => {
   try {
     const movie = await movieService.getMovieID(req.params.id);
-    const formData = formHelper.createOrEditFormData(movie);
-    const head = headHelper.optimizeSEO({}, defaults.editDefault);
-    const categories = defaults.genres;
-    res.render('edit', { formData, head, categories });
+
+    const updateMovieStructure = {
+      headData: {
+        head: headHelper.optimizeSEO({}, defaults.editDefault)
+      },
+      data: {
+        formData: formHelper.createOrEditFormData(movie),
+        categories: defaults.genres
+      }
+    };
+
+    res.render('edit', { ...updateMovieStructure });
   } catch (err) {
     console.log(`Error getting movie route: ${err.message}`);
   };
@@ -142,10 +184,18 @@ const updateMovieRoute = async (req, res) => {
  * @param {Object} res - The response object.
  */
 const postMovieRoute = (req, res) => {
-  const formData = formHelper.createOrEditFormData();
-  const head = headHelper.optimizeSEO({}, defaults.postDefault);
-  const categories = defaults.genres;
-  res.render('post', { formData, head, categories });
+
+  const postMovieStructure = {
+    headData: {
+      head: headHelper.optimizeSEO({}, defaults.postDefault)
+    },
+    data: {
+      formData: formHelper.createOrEditFormData(),
+      categories: defaults.genres
+    }
+  };
+
+  res.render('post', { ...postMovieStructure });
 };
 
 /**

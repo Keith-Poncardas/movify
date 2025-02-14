@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
 
-<%- include('partials/head', { head }) %>
+<%- include('partials/head', { ...headData }) %>
 
 <body>
   <%- include('partials/navbar') %>
   <%- include('partials/movieInput') %>
-  <%- include('partials/containerHeading', { genres, name: '', btnFilterTitle: 'Filter', btnSortTitle: 'Sort', isBtnHide: false }) %>
-  <%- include('partials/movieContainer') %>
+  <%- include('partials/containerHeading', { ...containerHeadingData }) %>
+  <%- include('partials/movieContainer', { movies }) %>
   <%- include('partials/credits') %>
   <%- include('partials/script') %>
 </body>
