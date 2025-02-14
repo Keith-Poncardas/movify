@@ -22,7 +22,15 @@ const mongoose = require('mongoose');
  */
 const movieSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  genre: { type: String, required: true },
+  genre: {
+    type: String,
+    required: true,
+    enum: [
+      'Action', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime',
+      'Documentary', 'Drama', 'Family', 'Fantasy', 'History', 'Horror',
+      'Musical', 'Mystery', 'Romance', 'Sci-Fi', 'Sport', 'Thriller', 'War', 'Western'
+    ],
+  },
   director: { type: String, required: true },
   releaseYear: { type: Number, required: true },
   duration: { type: Number, required: true },

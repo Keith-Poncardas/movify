@@ -85,4 +85,16 @@ const errorDefault = {
   ogDescription: 'Discover amazing content on my site!',
 };
 
-module.exports = { homeDefault, postDefault, editDefault, errorDefault };
+/**
+ * An array of movie genres.
+ * @constant {string[]}
+ * @default
+ * @example
+ */
+const genres = [
+  'Action', 'Adventure', 'Animation', 'Biography', 'Comedy', 'Crime',
+  'Documentary', 'Drama', 'Family', 'Fantasy', 'History', 'Horror',
+  'Musical', 'Mystery', 'Romance', 'Sci-Fi', 'Sport', 'Thriller', 'War', 'Western'
+];
+
+module.exports = { homeDefault, postDefault, editDefault, errorDefault, genres };

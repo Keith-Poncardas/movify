@@ -10,12 +10,27 @@ const connectDB = require('./config/db'); // Database connection function
 const controller = require('./controllers/movieControllers'); // Import movie controller
 const headHelper = require('./utils/headHelper'); // Helper for SEO optimization
 const cors = require('cors'); // Middleware for enabling Cross-Origin Resource Sharing
+const minifyHTML = require("express-minify-html");
+
 
 // Initialize Express app
 const app = express();
 
 // Set the port from environment variables or default to 3000
 const PORT = process.env.PORT || 3000;
+
+// Enable HTML minifier
+app.use(
+  minifyHTML({
+    override: true,
+    htmlMinifier: {
+      collapseWhitespace: true,
+      removeComments: true,
+      minifyCSS: true,
+      minifyJS: true,
+    },
+  })
+);
 
 // Enable CORS to allow cross-origin requests
 app.use(cors());
@@ -42,7 +57,7 @@ app.use('/movie', require('./routes/movieRoutes')); // Movie-related routes
 // 404 Error Handling Middleware
 app.use((req, res) => {
   // Generate SEO metadata for the error page
-  const head = headHelper.optimizeSEO({}, require('./constant/defaultSeo').errorDefault);
+  const head = headHelper.optimizeSEO({}, require('./constant/defaults').errorDefault);
   res.render('404', { head }); // Render the "404.ejs" view with SEO metadata
 });
 

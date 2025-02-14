@@ -1,7 +1,7 @@
 const movieService = require('../services/movieServices');
 const formHelper = require('../utils/formHelper');
 const headHelper = require('../utils/headHelper');
-const defaults = require('../constant/defaultSeo');
+const defaults = require('../constant/defaults');
 
 /**
  * Creates a new movie and redirects to the home page.
@@ -29,10 +29,12 @@ const createMovie = async (req, res) => {
  * @throws {Error} - If there is an error retrieving the movies.
  */
 const getMovies = async (req, res) => {
+  const { genre } = req.query;
   try {
-    const movies = await movieService.getMovies();
+    const movies = await movieService.getMovies(genre);
     const head = headHelper.optimizeSEO({}, defaults.homeDefault);
-    res.render('home', { movies, head });
+    const genres = defaults.genres;
+    res.render('home', { movies, head, genres });
   } catch (err) {
     console.log(`Error getting movie: ${err.message}`);
   };
@@ -122,7 +124,8 @@ const updateMovieRoute = async (req, res) => {
     const movie = await movieService.getMovieID(req.params.id);
     const formData = formHelper.createOrEditFormData(movie);
     const head = headHelper.optimizeSEO({}, defaults.editDefault);
-    res.render('edit', { formData, head });
+    const categories = defaults.genres;
+    res.render('edit', { formData, head, categories });
   } catch (err) {
     console.log(`Error getting movie route: ${err.message}`);
   };
@@ -141,7 +144,8 @@ const updateMovieRoute = async (req, res) => {
 const postMovieRoute = (req, res) => {
   const formData = formHelper.createOrEditFormData();
   const head = headHelper.optimizeSEO({}, defaults.postDefault);
-  res.render('post', { formData, head });
+  const categories = defaults.genres;
+  res.render('post', { formData, head, categories });
 };
 
 /**

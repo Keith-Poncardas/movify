@@ -15,12 +15,19 @@ const createMovie = async (data) => {
 };
 
 /**
- * Retrieves a list of movies from the database, sorted by the most recently updated.
- * 
- * @returns {Promise<Array>} A promise that resolves to an array of movie objects.
+ * Retrieves movies from the database based on the provided query.
+ * If a query is provided, it returns movies that match the specified genre.
+ * If no query is provided, it returns all movies sorted by the most recently updated.
+ *
+ * @param {string} [query] - The genre to filter movies by.
+ * @returns {Promise<Array>} A promise that resolves to an array of movies.
  */
-const getMovies = async () => {
-  return await Movie.find().sort({ updatedAt: -1 });
+const getMovies = async (query) => {
+  if (query) {
+    return await Movie.find({ genre: query });
+  } else {
+    return await Movie.find().sort({ updatedAt: -1 });
+  }
 };
 
 /**

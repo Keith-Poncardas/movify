@@ -1,5 +1,5 @@
 <div class="container mt-3">
-  <div class="card border-0 bg-body-tertiary shadow-sm">
+  <div class="card border-0 bg-body-tertiary rounded-4 shadow-sm">
     <h4 class="fs-6 mt-4 mx-3 fw-bold"><%= formData.formTitle %></h4>
     <div class="card-body">
       <form action="<%= formData.formAction %>" method="post" class="row g-3">
@@ -12,8 +12,12 @@
         </div>
         <div class="col-md-6">
           <div class="form-floating">
-            <input type="text" class="form-control border-0" id="genre" placeholder="Genre" value="<%= formData.genre || '' %>" name="genre" required>
-            <label for="genre">Genre</label>
+            <select class="form-select border-0" id="floatingSelect" aria-label="Floating label select example" name="genre">
+              <% categories.forEach(category => { %>
+              <option value="<%= category || '' %>" <%= formData.genre === category ? 'selected' : '' %>><%= category || '' %></option>
+              <% }) %>
+            </select>
+            <label for="floatingSelect">Genre</label>
           </div>
         </div>
 
