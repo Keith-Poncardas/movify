@@ -31,9 +31,9 @@ const createMovie = async (req, res) => {
  * @returns {Promise<void>} - Renders the home page with movies data.
  */
 const getMovies = async (req, res) => {
-  const { genre } = req.query;
+  const { genre, sort } = req.query;
   try {
-    const moviesData = await movieService.getMovies(genre);
+    const moviesData = await movieService.getMovies(genre, sort);
 
     const getMoviesStructure = {
       headData: {

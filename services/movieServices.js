@@ -15,19 +15,24 @@ const createMovie = async (data) => {
 };
 
 /**
- * Retrieves movies from the database based on the provided query.
- * If a query is provided, it returns movies that match the specified genre.
- * If no query is provided, it returns all movies sorted by the most recently updated.
+ * Retrieves a list of movies based on the provided query and sort options.
  *
- * @param {string} [query] - The genre to filter movies by.
- * @returns {Promise<Array>} A promise that resolves to an array of movies.
+ * @param {string} [query] - The genre to filter movies by. If not provided, all genres are included.
+ * @param {string} [sort] - The sorting option for the movies. Can be 'Most Popular' or 'Latest'.
+ *                          Defaults to sorting by the most recently updated movies.
+ * @returns {Promise<Array>} A promise that resolves to an array of movies matching the filter and sort criteria.
  */
-const getMovies = async (query) => {
-  if (query) {
-    return await Movie.find({ genre: query });
-  } else {
-    return await Movie.find().sort({ updatedAt: -1 });
-  }
+const getMovies = async (query, sort) => {
+  const filter = query ? { genre: query } : {};
+  let sortOption = { updatedAt: -1 };
+
+  if (sort === 'Most Popular') {
+    sortOption = { rating: -1 };
+  } else if (sort === 'Latest') {
+    sortOption = { releaseYear: -1 };
+  };
+
+  return await Movie.find(filter).sort(sortOption);
 };
 
 /**
