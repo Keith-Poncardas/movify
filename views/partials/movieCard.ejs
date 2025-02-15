@@ -45,6 +45,7 @@
           <%= isHide ? movie.description : movie.description.substring(0, 100) + '...' %>
         </p>
 
+        <!-- Details button -->
         <button class="btn btn-outline-primary rounded-3 <%= isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/view'">Details</button>
 
         <!-- Hidden Buttons on view mode -->
