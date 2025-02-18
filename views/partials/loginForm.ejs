@@ -1,0 +1,19 @@
+<div class="container mt-3">
+  <div class="card border-0 bg-body-tertiary rounded-4 shadow-sm">
+    <h4 class="fs-6 mt-4 mx-3 fw-bold">Authorization Required</h4>
+    <form action="<%= formAction %>" method="post">
+      <!-- Title & Genre -->
+      <div class="p-3">
+        <div class="form-floating">
+          <input type="text" class="form-control border-0" id="title" placeholder="Secret Key" value="" name="secretKey" required>
+          <label for="title">Enter Secret Key</label>
+        </div>
+      </div>
+      <input type="hidden" name="movieId" value="<%= movieId %>">
+      <div class="p-3 text-end">
+        <button type="button" class="btn btn-secondary" onclick="window.location = '/'">Back</button>
+        <button type="submit" class="btn btn-success">Access</button>
+      </div>
+    </form>
+  </div>
+</div>
