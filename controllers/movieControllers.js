@@ -11,14 +11,7 @@ const defaults = require('../constant/defaults');
  * @param {Object} res - The response object.
  * @returns {Promise<void>} - A promise that resolves when the movie is created and the response is sent.
  */
-const createMovie = async (req, res) => {
-  try {
-    await movieService.createMovie(req.body);
-    res.redirect('/');
-  } catch (err) {
-    console.log(`Error creating movie: ${err.message}`);
-  };
-};
+const createMovie = async (req, res) => { };
 
 /**
  * Controller function to get movies based on genre and render the home page.
@@ -216,4 +209,85 @@ const getJSON = async (req, res) => {
   };
 };
 
-module.exports = { createMovie, getMovies, updateMovie, deleteMovie, updateMovieRoute, postMovieRoute, getMovie, getJSON }; // Export all the functions.
+/**
+ * Controller function to render the admin login page.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
+const adminLoginPost = (req, res) => {
+
+  const adminLoginPostStructure = {
+    headData: {
+      head: headHelper.optimizeSEO({}, defaults.adminLoginDefault)
+    },
+    formData: {
+      formAction: '/movie/login/post',
+      movieId: '',
+    }
+  };
+
+  res.render('authPost', { ...adminLoginPostStructure });
+};
+
+const adminLoginEdit = (req, res) => {
+  const { id } = req.params;
+
+  const adminEditStructure = {
+    headData: {
+      head: headHelper.optimizeSEO({}, defaults.adminLoginDefault)
+    },
+    formData: {
+      formAction: `/movie/login/edit?id=${id}`,
+      movieId: id,
+    },
+    customErrMsg: 'Invalid Secret Key!',
+  };
+
+  res.render('authEdit', { ...adminEditStructure });
+};
+
+
+const protectPostRoute = (req, res) => {
+  const { secretKey } = req.body;
+
+  if (secretKey === process.env.SECRET_KEY) {
+    console.log("Authentication successful!");
+    return res.redirect(`/movie/post?secretKey=${secretKey}`);
+  } else {
+    res.redirect(`/movie/post?secretKey=${secretKey}`);
+  };
+
+};
+
+/**
+ * Middleware to protect the edit route for a movie.
+ * 
+ * This function checks if the provided secret key matches the one stored in the environment variables.
+ * If the authentication is successful, it redirects to the edit page for the specified movie.
+ * Otherwise, it redirects to the edit page with an error query parameter.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The body of the request.
+ * @param {string} req.body.movieId - The ID of the movie to be edited.
+ * @param {string} req.body.secretKey - The secret key for authentication.
+ * @param {Object} res - The response object.
+ */
+const protectEditRoute = (req, res) => {
+  const { movieId, secretKey } = req.body;
+
+  console.log(`Movie ID: ${movieId}`)
+
+  if (secretKey === process.env.SECRET_KEY) {
+    console.log("Authentication successful!");
+    return res.redirect(`/movie/${movieId}/edit?secretKey=${secretKey}`);
+  } else {
+    console.log("Fails!");
+    res.redirect(`/movie/${movieId}/edit?error=true`);
+  };
+}
+
+// Correct format: /movie/67b074d7b5aab912b419072f/edit?secretKey=iamwebdev@2003?
+// /movie/login/edit?id=67b074d7b5aab912b419072f
+
+module.exports = { createMovie, getMovies, updateMovie, deleteMovie, updateMovieRoute, postMovieRoute, getMovie, getJSON, adminLoginPost, adminLoginEdit, protectPostRoute, protectEditRoute }; // Export all the functions.

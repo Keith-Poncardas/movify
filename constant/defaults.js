@@ -86,6 +86,27 @@ const errorDefault = {
 };
 
 /**
+ * Default settings for the login page.
+ * @constant {Object} loginDefault
+ * @property {string} title - The title of the page.
+ * @property {string} description - The description of the page.
+ * @property {string} keywords - The meta keywords for the page.
+ * @property {string} author - The author of the page content.
+ * @property {string} canUrl - The canonical URL of the page.
+ * @property {string} ogTitle - The Open Graph title for social media sharing.
+ * @property {string} ogDescription - The Open Graph description for social media sharing.
+ */
+const adminLoginDefault = {
+  title: 'Admin Login',
+  description: 'Welcome to my website!',
+  keywords: 'web development, programming, JavaScript',
+  author: 'Keith Poncardas',
+  canUrl: 'https://mywebsite.com',
+  ogTitle: 'My Awesome Website',
+  ogDescription: 'Discover amazing content on my site!',
+};
+
+/**
  * An array of movie genres.
  * @constant {string[]}
  * @default
@@ -102,4 +123,4 @@ const sortBy = [
   'Latest'
 ];
 
-module.exports = { homeDefault, postDefault, editDefault, errorDefault, genres, sortBy };
+module.exports = { homeDefault, postDefault, editDefault, errorDefault, genres, sortBy, adminLoginDefault };

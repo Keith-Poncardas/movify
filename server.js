@@ -11,6 +11,7 @@ const controller = require('./controllers/movieControllers'); // Import movie co
 const headHelper = require('./utils/headHelper'); // Helper for SEO optimization
 const cors = require('cors'); // Middleware for enabling Cross-Origin Resource Sharing
 const minifyHTML = require("express-minify-html");
+const session = require('express-session');
 
 
 // Initialize Express app
@@ -32,6 +33,13 @@ app.use(
   })
 );
 
+// Set up session middleware
+app.use(session({
+  secret: 'iamwebdev', // Change this to a secret string
+  resave: false,
+  saveUninitialized: true
+}));
+
 // Enable CORS to allow cross-origin requests
 app.use(cors());
 
@@ -43,6 +51,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Parse incoming request bodies (application/x-www-form-urlencoded)
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Enable HTTP method overrides (e.g., PUT, DELETE in forms)
 app.use(methodOverride('_method'));
@@ -60,7 +69,8 @@ app.use((req, res) => {
   const errorStructure = {
     headData: {
       head: headHelper.optimizeSEO({}, require('./constant/defaults').errorDefault)
-    }
+    },
+    customErrMsg: '404 Page Not Found.'
   };
 
   res.render('404', { ...errorStructure }); // Render the "404.ejs" view with SEO metadata
