@@ -50,7 +50,7 @@
 
         <!-- Hidden Buttons on view mode -->
         <button class="btn btn-secondary rounded-3 btn-sm <%= !isHide ? 'd-none' : '' %>" onclick="window.location = '/'">Back</button>
-        <button class="btn btn-success rounded-3 btn-sm <%= !isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/<%= movie._id %>/edit/auth'">Edit</button>
+        <button class="btn btn-success rounded-3 btn-sm <%= !isHide ? 'd-none' : '' %>" onclick="window.location = '/movie/auth?method=edit&movieId=<%= movie._id %>'">Edit</button>
 
         <!-- Delete Button -->
         <form action="#" method="post" class="d-inline">

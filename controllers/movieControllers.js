@@ -2,6 +2,7 @@ const movieService = require('../services/movieServices');
 const formHelper = require('../utils/formHelper');
 const headHelper = require('../utils/headHelper');
 const defaults = require('../constant/defaults');
+const MovifyError = require('../error/errorHandler');
 
 /**
  * Creates a new movie and redirects to the home page.
@@ -11,7 +12,14 @@ const defaults = require('../constant/defaults');
  * @param {Object} res - The response object.
  * @returns {Promise<void>} - A promise that resolves when the movie is created and the response is sent.
  */
-const createMovie = async (req, res) => { };
+const createMovie = async (req, res) => {
+  try {
+    await movieService.createMovie(req.body);
+  } catch (err) {
+    console.log(`Error creating movie: ${err.message}`);
+    throw new MovifyError("Error Creating Movie, Try Again Later", 400);
+  };
+};
 
 /**
  * Controller function to get movies based on genre and render the home page.
@@ -25,6 +33,7 @@ const createMovie = async (req, res) => { };
  */
 const getMovies = async (req, res) => {
   const { genre, sort } = req.query;
+
   try {
     const moviesData = await movieService.getMovies(genre, sort);
 
@@ -46,6 +55,7 @@ const getMovies = async (req, res) => {
     res.render('home', { ...getMoviesStructure });
   } catch (err) {
     console.log(`Error getting movie: ${err.message}`);
+    throw new MovifyError('Error Getting Movies, Try Again Later', 500);
   };
 };
 
@@ -69,6 +79,7 @@ const updateMovie = async (req, res) => {
     res.redirect(`/movie/${id}/view`);
   } catch (err) {
     console.log(`Error updating movie: ${err.message}`);
+    throw new MovifyError('Error Updating Movie, Try Again Later', 500);
   };
 };
 
@@ -90,6 +101,7 @@ const deleteMovie = async (req, res) => {
     res.redirect('/');
   } catch (err) {
     console.log(`Error deleting movie: ${err.message}`);
+    throw new MovifyError('Error Deleting Movie, Try Again Later', 500);
   };
 };
 
@@ -147,6 +159,7 @@ const getMovie = async (req, res) => {
  * @throws {Error} - Throws an error if there is an issue retrieving the movie.
  */
 const updateMovieRoute = async (req, res) => {
+
   try {
     const movie = await movieService.getMovieID(req.params.id);
 
@@ -162,7 +175,8 @@ const updateMovieRoute = async (req, res) => {
 
     res.render('edit', { ...updateMovieStructure });
   } catch (err) {
-    console.log(`Error getting movie route: ${err.message}`);
+    console.log(`Error Getting Edit Route: ${err.message}`);
+    throw new MovifyError('Error Getting Edit Route', 500);
   };
 };
 
@@ -215,79 +229,39 @@ const getJSON = async (req, res) => {
  * @param {Object} req - The request object.
  * @param {Object} res - The response object.
  */
-const adminLoginPost = (req, res) => {
+const adminAccess = (req, res) => {
 
-  const adminLoginPostStructure = {
+  const { method, movieId } = req.query;
+
+  const adminAccessStructure = {
     headData: {
       head: headHelper.optimizeSEO({}, defaults.adminLoginDefault)
     },
     formData: {
-      formAction: '/movie/login/post',
-      movieId: '',
-    }
+      formAction: `/movie/auth?method=${method}&movieId=${movieId}`,
+    },
   };
 
-  res.render('authPost', { ...adminLoginPostStructure });
-};
-
-const adminLoginEdit = (req, res) => {
-  const { id } = req.params;
-
-  const adminEditStructure = {
-    headData: {
-      head: headHelper.optimizeSEO({}, defaults.adminLoginDefault)
-    },
-    formData: {
-      formAction: `/movie/login/edit?id=${id}`,
-      movieId: id,
-    },
-    customErrMsg: 'Invalid Secret Key!',
-  };
-
-  res.render('authEdit', { ...adminEditStructure });
+  res.render('auth', { ...adminAccessStructure });
 };
 
 
-const protectPostRoute = (req, res) => {
+const protectRoute = (req, res) => {
+
   const { secretKey } = req.body;
+  const { method, movieId } = req.query;
 
-  if (secretKey === process.env.SECRET_KEY) {
-    console.log("Authentication successful!");
-    return res.redirect(`/movie/post?secretKey=${secretKey}`);
-  } else {
-    res.redirect(`/movie/post?secretKey=${secretKey}`);
+  switch (method) {
+    case 'post':
+      res.redirect(`/movie/post?secretKey=${secretKey}`);
+      break;
+    case 'edit':
+      res.redirect(`/movie/${movieId}/edit?secretKey=${secretKey}`);
+      break;
+    default:
+      break;
   };
 
 };
 
-/**
- * Middleware to protect the edit route for a movie.
- * 
- * This function checks if the provided secret key matches the one stored in the environment variables.
- * If the authentication is successful, it redirects to the edit page for the specified movie.
- * Otherwise, it redirects to the edit page with an error query parameter.
- * 
- * @param {Object} req - The request object.
- * @param {Object} req.body - The body of the request.
- * @param {string} req.body.movieId - The ID of the movie to be edited.
- * @param {string} req.body.secretKey - The secret key for authentication.
- * @param {Object} res - The response object.
- */
-const protectEditRoute = (req, res) => {
-  const { movieId, secretKey } = req.body;
-
-  console.log(`Movie ID: ${movieId}`)
-
-  if (secretKey === process.env.SECRET_KEY) {
-    console.log("Authentication successful!");
-    return res.redirect(`/movie/${movieId}/edit?secretKey=${secretKey}`);
-  } else {
-    console.log("Fails!");
-    res.redirect(`/movie/${movieId}/edit?error=true`);
-  };
-}
-
-// Correct format: /movie/67b074d7b5aab912b419072f/edit?secretKey=iamwebdev@2003?
-// /movie/login/edit?id=67b074d7b5aab912b419072f
-
-module.exports = { createMovie, getMovies, updateMovie, deleteMovie, updateMovieRoute, postMovieRoute, getMovie, getJSON, adminLoginPost, adminLoginEdit, protectPostRoute, protectEditRoute }; // Export all the functions.
+module.exports = { createMovie, getMovies, updateMovie, deleteMovie, updateMovieRoute, postMovieRoute, getMovie, getJSON, adminAccess, protectRoute }; // Export all the functions.

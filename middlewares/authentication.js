@@ -1,4 +1,5 @@
 const { isValidSecretKey } = require('../utils/secretKeyValidator');
+const MovifyError = require('../error/errorHandler');
 
 /**
  * Middleware to validate the secret key from the request query parameters.
@@ -15,11 +16,11 @@ function validateSecretKey(req, res, next) {
   const { secretKey } = req.query;
 
   if (!secretKey || !isValidSecretKey(secretKey)) {
-    return res.redirect('/movie');
-  }
+    next(new MovifyError('Invalid Secret Key', 401));
+  };
 
   console.log("Authentication successful!");
   next();
-}
+};
 
 module.exports = { validateSecretKey };

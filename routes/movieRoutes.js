@@ -5,8 +5,9 @@
 
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/movieControllers');
+const { getMovies, protectRoute, updateMovieRoute, postMovieRoute, getMovie, getJSON, adminAccess, createMovie, updateMovie, deleteMovie } = require('../controllers/movieControllers');
 const { validateSecretKey } = require('../middlewares/authentication');
+const catchAsync = require('../middlewares/catchAsyncErr');
 
 /**
  * Route to get all movies.
@@ -17,7 +18,7 @@ const { validateSecretKey } = require('../middlewares/authentication');
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/', controller.getMovies);
+router.get('/', catchAsync(getMovies));
 
 /**
  * Route to protect post route.
@@ -28,18 +29,18 @@ router.get('/', controller.getMovies);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/login/post', controller.protectPostRoute);
+router.post('/auth', protectRoute);
 
-/**
- * Route to protect edit route.
- * @name post/login/edit
- * @function
- * @memberof module:routes/movieRoutes
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- */
-router.post('/login/edit', controller.protectEditRoute);
+// /**
+//  * Route to protect edit route.
+//  * @name post/login/edit
+//  * @function
+//  * @memberof module:routes/movieRoutes
+//  * @inner
+//  * @param {string} path - Express path
+//  * @param {callback} middleware - Express middleware
+//  */
+// router.post('/login/edit', controller.protectRoute);
 
 /**
  * Route to get the edit page for a specific movie.
@@ -50,7 +51,7 @@ router.post('/login/edit', controller.protectEditRoute);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/:id/edit', validateSecretKey, controller.updateMovieRoute);
+router.get('/:id/edit', validateSecretKey, catchAsync(updateMovieRoute));
 
 /**
  * Route to get the page for posting a new movie.
@@ -61,7 +62,7 @@ router.get('/:id/edit', validateSecretKey, controller.updateMovieRoute);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/post', validateSecretKey, controller.postMovieRoute);
+router.get('/post', validateSecretKey, postMovieRoute);
 
 /**
  * Route to view a specific movie.
@@ -72,7 +73,7 @@ router.get('/post', validateSecretKey, controller.postMovieRoute);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/:id/view', controller.getMovie);
+router.get('/:id/view', getMovie);
 
 /**
  * Route to get all movies in JSON format.
@@ -83,7 +84,7 @@ router.get('/:id/view', controller.getMovie);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/api/all', controller.getJSON);
+router.get('/api/all', getJSON);
 
 /**
  * Route to get the login page for admin.
@@ -94,18 +95,7 @@ router.get('/api/all', controller.getJSON);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/post/auth', controller.adminLoginPost);
-
-/**
- * Route to get the login page for editing a specific movie.
- * @name get/:id/edit/auth
- * @function
- * @memberof module:routes/movieRoutes
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- */
-router.get('/:id/edit/auth', controller.adminLoginEdit);
+router.get('/auth', adminAccess);
 
 /**
  * Route to create a new movie.
@@ -116,7 +106,7 @@ router.get('/:id/edit/auth', controller.adminLoginEdit);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/', controller.createMovie);
+router.post('/', catchAsync(createMovie));
 
 /**
  * Route to update a specific movie.
@@ -127,7 +117,7 @@ router.post('/', controller.createMovie);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.put('/:id', controller.updateMovie);
+router.put('/:id', catchAsync(updateMovie));
 
 /**
  * Route to delete a specific movie.
@@ -138,6 +128,6 @@ router.put('/:id', controller.updateMovie);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.delete('/:id', controller.deleteMovie);
+router.delete('/:id', catchAsync(deleteMovie));
 
 module.exports = router;

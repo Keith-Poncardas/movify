@@ -12,6 +12,8 @@ const headHelper = require('./utils/headHelper'); // Helper for SEO optimization
 const cors = require('cors'); // Middleware for enabling Cross-Origin Resource Sharing
 const minifyHTML = require("express-minify-html");
 const session = require('express-session');
+const MovifyError = require('./error/errorHandler');
+const catchAsync = require('./middlewares/catchAsyncErr');
 
 
 // Initialize Express app
@@ -63,21 +65,29 @@ app.set('view engine', 'ejs');
 app.get('/', controller.getMovies); // Route for homepage displaying movies
 app.use('/movie', require('./routes/movieRoutes')); // Movie-related routes
 
-// 404 Error Handling Middleware
-app.use((req, res) => {
+app.use((req, res, next) => {
+  next(new MovifyError("Page Not Found", 404));
+});
+
+// Centralized Error Handling
+app.use((err, req, res, next) => {
+  let { statusCode, message } = err;
+
+  if (!statusCode) statusCode = 500;
+  if (!message) message = 'Internal Server Error';
 
   const errorStructure = {
     headData: {
-      head: headHelper.optimizeSEO({}, require('./constant/defaults').errorDefault)
+      head: headHelper.optimizeSEO({}, { title: message })
     },
-    customErrMsg: '404 Page Not Found.'
+    customErrMsg: message
   };
 
-  res.render('404', { ...errorStructure }); // Render the "404.ejs" view with SEO metadata
+  res.render('404', { ...errorStructure });
 });
 
 // Connect to the database
-connectDB();
+catchAsync(connectDB());
 
 // Start the Express server
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const MovifyError = require('../error/errorHandler');
 
 
 /**
@@ -16,6 +17,7 @@ const connectDB = async () => {
     console.log('Database connected succesfully!');
   } catch (err) {
     console.log(`Error connecting database: ${err.message}`);
+    throw new MovifyError('Error Connecting To Database', 500);
   };
 };
 
