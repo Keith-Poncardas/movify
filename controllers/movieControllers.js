@@ -15,6 +15,7 @@ const MovifyError = require('../error/errorHandler');
 const createMovie = async (req, res) => {
   try {
     await movieService.createMovie(req.body);
+    res.redirect('/');
   } catch (err) {
     console.log(`Error creating movie: ${err.message}`);
     throw new MovifyError("Error Creating Movie, Try Again Later", 400);
@@ -140,6 +141,7 @@ const getMovie = async (req, res) => {
     res.render('view', { ...getMovieStructure });
   } catch (err) {
     console.log(`Error getting movie: ${err.message}`);
+    throw new MovifyError('Movie Not Exist.', 404);
   };
 };
 
@@ -176,7 +178,7 @@ const updateMovieRoute = async (req, res) => {
     res.render('edit', { ...updateMovieStructure });
   } catch (err) {
     console.log(`Error Getting Edit Route: ${err.message}`);
-    throw new MovifyError('Error Getting Edit Route', 500);
+    throw new MovifyError('Movie Not Exist.', 500);
   };
 };
 

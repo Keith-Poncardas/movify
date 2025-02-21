@@ -73,7 +73,7 @@ router.get('/post', validateSecretKey, postMovieRoute);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/:id/view', getMovie);
+router.get('/:id/view', catchAsync(getMovie));
 
 /**
  * Route to get all movies in JSON format.
